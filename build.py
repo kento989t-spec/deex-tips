@@ -10,9 +10,23 @@ OUT_DIR = Path(__file__).parent / "docs"
 
 
 def parse_tips(md_text: str) -> list[dict]:
-    sections = re.split(r"^## ", md_text, flags=re.MULTILINE)[1:]
+    # コードブロック内の ## をセクション区切りと誤認しないよう、
+    # コードブロックを一時的にプレースホルダーに置換してから分割する
+    code_blocks: list[str] = []
+
+    def replace_code(m: re.Match) -> str:
+        code_blocks.append(m.group(0))
+        return f"__CODE_BLOCK_{len(code_blocks) - 1}__"
+
+    safe_text = re.sub(r"```[\s\S]*?```", replace_code, md_text)
+
+    sections = re.split(r"^## ", safe_text, flags=re.MULTILINE)[1:]
     tips = []
     for section in sections:
+        # コードブロックを復元
+        for idx, block in enumerate(code_blocks):
+            section = section.replace(f"__CODE_BLOCK_{idx}__", block)
+
         lines = section.strip().split("\n")
         title = lines[0].strip()
         tags = []
