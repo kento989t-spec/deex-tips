@@ -118,7 +118,43 @@ header h1 { font-size: 1.5rem; font-weight: 700; }
   margin: 0.75rem 0;
   font-size: 0.8rem;
   line-height: 1.5;
+  position: relative;
 }
+.copy-code-btn {
+  position: absolute;
+  top: 0.4rem;
+  right: 0.4rem;
+  padding: 0.2rem 0.6rem;
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 4px;
+  background: rgba(255,255,255,0.08);
+  color: #e2e8f0;
+  font-size: 0.7rem;
+  font-family: inherit;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.15s, background 0.15s;
+}
+.tip-body pre:hover .copy-code-btn,
+.copy-code-btn:focus {
+  opacity: 1;
+}
+.copy-code-btn:hover { background: rgba(255,255,255,0.18); }
+.copy-code-btn.copied { background: #059669; border-color: #059669; color: #fff; opacity: 1; }
+.copy-tip-btn {
+  padding: 0.25rem 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--card);
+  color: var(--text-secondary);
+  font-size: 0.7rem;
+  font-family: inherit;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all 0.15s;
+}
+.copy-tip-btn:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
+.copy-tip-btn.copied { background: #059669; border-color: #059669; color: #fff; }
 .tip-body pre code {
   background: none;
   padding: 0;
